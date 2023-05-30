@@ -1,0 +1,25 @@
+// 定义项目 API 的 proto 文件 可以同时描述 gRPC 和 HTTP API
+// protobuf 文件参考:
+//  - https://developers.google.com/protocol-buffers/
+syntax = "proto3";
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "tty/tty.proto";
+
+// package 命名使用 {appid}.{version} 的方式, version 形如 v1, v2 ..
+package tty;
+
+// NOTE: 最后请删除这些无用的注释 (゜-゜)つロ
+
+option go_package = "test/tty;v1";
+option (gogoproto.goproto_getters_all) = false;
+
+service Tty {
+    // 增加玩家购买的礼包次数
+    rpc TtyVersion(tty.Empty) returns (tty.TtyVersionResp) {
+        option (google.api.http) = {
+            get: "tty/version"
+        };
+    };
+}
